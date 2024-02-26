@@ -2,12 +2,28 @@ const mongoose = require('mongoose');
 
 //name address district province postalcode tel type price licenseplate
 const CarSchema = new mongoose.Schema({
-    name: {
+    nameofmodel: {
         type: String,
-        required: [true, 'Please add a name'],
+        required: [true, 'Please add a nameofmodel'],
         unique: true,
         trim: true,
         maxlength:[50, 'Name can not be more than 50 charracters']
+    },
+    brand :{
+        type: String
+       
+    },
+    type :{
+        type: String,
+        enum: ['sedan','sport','truck'],
+        required: [true,'Please add a type']
+    },
+    price :{
+        type: String
+    },
+    licenseplate :{
+        type:String,
+        unique:true
     },
     address:{
         type: String,
@@ -28,22 +44,6 @@ const CarSchema = new mongoose.Schema({
     },
     tel:{
         type: String
-    },
-    brand :{
-        type: String
-       
-    },
-    type :{
-        type: String,
-        enum: ['sedan','sport','truck'],
-        required: [true,'Please add a type']
-    },
-    price :{
-        type: String
-    },
-    licenseplate :{
-        type:String,
-        unique:true
     }
 
 });

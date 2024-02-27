@@ -4,37 +4,37 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const UserSchema = new mongoose.Schema({
-    name:{
+    name: {
         type: String,
-        required:[true, 'Please add a name']
+        required: [true, 'Please add a name']
     },
-    tel:{
+    tel: {
         type: String,
-        required:[true, 'Please add a tel'],
+        required: [true, 'Please add a telephone number'],
         unique : true,
-        match:[
-            /^0\d{9}$/
-            ,'Please add a valid tel'
+        match: [
+            /^0[0-9]{9}$/,
+            'Please add a valid telephone number'
         ]
     },
-    email:{
+    email: {
         type: String,
-        required:[true, 'Please add an email'],
+        required: [true, 'Please add an email'],
         unique: true,
-        match:[
+        match: [
             /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
             'Please add a valid email'
         ]
     },
     role: {
         type: String,
-        enum :['user', 'admin'],
+        enum: ['user', 'admin'],
         default: 'user'
     },
     password: {
         type : String,
         required: [true, 'Please enter a password'],
-        minlength:6,
+        minlength: 6,
         select: false
     },
     resetPasswordToken: String,
@@ -58,6 +58,7 @@ UserSchema.methods.getSignedJwtToken = function(){
     });
 }
 
+//Match user entered password to hashed password in database
 UserSchema.methods.matchPassword = async function(enteredPassword){
     return await bcrypt.compare(enteredPassword, this.password);
 }

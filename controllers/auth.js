@@ -48,7 +48,8 @@ exports.register = async (req,res,next)=> {
 //@route POST /api/v1/auth/login
 //@access Public
 exports.login = async (req, res, next)=> {
-    const {email, password} = req.body;
+    try {
+        const {email, password} = req.body;
 
     //validate email and password if null will send status 400
     if(!email || !password){
@@ -69,6 +70,23 @@ exports.login = async (req, res, next)=> {
     // const token = user.getSignedJwtToken();
     // res.status(200).json({success:true,token});
     sendTokenResponse(user,200,res);
+
+    } catch (err) {
+        return res.status(401).json({success: false, message: 'Cannot login.'});
+    }
+    
+};
+
+//@desc Log user out / clear cookie
+//@route GET /api/v1/auth/logout
+//@access Private
+exports.logout = async (req, res, next) => {
+    res.cookie('token', 'none', {
+        expires: new Date(Date.now() + 10*1000),
+        httpOnly: true
+    });
+
+    res.status(200).json({success: true, data: {}});
 };
 
 exports.getMe = async(req,res,next) =>{

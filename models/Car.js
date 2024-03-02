@@ -56,7 +56,7 @@ const CarSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Please add an Google Maps URL.'],
         match: [
-            /^https?:\/\/(www\.)?google\.com\/maps\/(?:.*?\&)?(q|daddr)=(.*)$/,
+            /^(https:\/\/maps\.app\.goo\.gl\/.*)$|^(https?:\/\/(www\.)?google\.com\/maps\/(?:.*?\&)?(q|daddr)=.*)$/,
             'Please add a valid Google Maps URL.'
         ]
     },

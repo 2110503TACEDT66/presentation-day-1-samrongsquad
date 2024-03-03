@@ -1,0 +1,32 @@
+@startuml Rental Car booking system
+left to right direction
+actor "NonUser" as NonRegisteredUser
+actor "User" as user
+
+rectangle "CarB" as RentalCarSystem {    
+    usecase "Register" as register
+    usecase "Login" as login
+    usecase "Logout" as logout
+    usecase "View his/her\nbooking" as viewBooking
+    usecase "Edit his/her\nbooking" as EditBooking
+    usecase "Delete his/her\nbooking" as DeleteBooking
+    usecase "View All\nbooking" as viewBookings
+    usecase "Edit All\nbooking" as EditBookings
+    usecase "Delete All\nbooking" as DeleteBookings
+
+}
+
+NonRegisteredUser -- register
+user -- login
+user -- logout
+user -- viewBooking
+user -- EditBooking
+user -- DeleteBooking
+
+
+actor "Admin" as admin
+viewBookings -- admin
+EditBookings -- admin
+DeleteBookings -- admin
+
+@enduml

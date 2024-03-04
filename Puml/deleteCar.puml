@@ -20,7 +20,8 @@ middlewareAuth->server --:
 server->routercars ++:app.use('/cars',cars)
 routercars -> controllerscars ++:deletecar()
 controllerscars->modelcar ++:findById(req.params.id)
-modelcar ->carsDatabase ++: carSchema
+modelcar -> bookingModel ++: deleteMany({ car: this.id })
+bookingModel ->carsDatabase ++: carSchema
 carsDatabase --> modelcar --: car
 controllerscars <-- modelcar --:car
 controllerscars->client --:response

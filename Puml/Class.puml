@@ -56,7 +56,9 @@ package "CarB"{
         <<POST>> +getMe():User
     }
 
-    class "<<Resource>>\nMiddleware" as ResourceMiddleware{
+    class "<<Resource>>\nAuthMiddleware" as ResourceAuthMiddleware{
+        protect()
+        authorize(roles)
         verifyToken()
     }
 
@@ -86,7 +88,7 @@ ResourceBookings ..> ResourceBooking: "/{bookingId}\n<<Path>>"
 ResourceBooking ..> RepresentationBooking: "<<use>>"
 
 CarBService ..> ResourceAuth:"/auth\n<<Path>>"
-ResourceAuth ..> ResourceMiddleware:"/middleware\n<<Path>>"
-ResourceAuth ..> RepresentationUser:"<<use>>"
+ResourceAuth ..> ResourceAuthMiddleware:"<<verify user>>"
+ResourceAuthMiddleware ..> RepresentationUser:"<<use>>"
 
 @enduml

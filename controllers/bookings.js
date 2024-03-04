@@ -10,19 +10,19 @@ exports.getBookings = async (req, res, next) => {
     if(req.user.role !== 'admin') {
         query = Booking.find({user: req.user.id}).populate({
             path: 'car',
-            select: 'nameofmodel licenseplate province tel'
+            select: 'brand carModel type licensePlate googleMapsURL tel'
         });
     } else { //If you are an admin, you can see all!
         if(req.params.carId) {
             // console.log(req.params.CarId);
             query = Booking.find({car: req.params.carId}).populate({
                 path: 'car',
-                select: 'nameofmodel licenseplate province tel'
+                select: 'brand carModel type licensePlate googleMapsURL tel'
             });
         } else {
             query = Booking.find().populate({
                 path: 'car',
-                select: 'nameofmodel licenseplate province tel'
+                select: 'brand carModel type licensePlate googleMapsURL tel'
             });
         }
     }
@@ -43,7 +43,7 @@ exports.getBooking = async (req, res, next) => {
     try {
         const booking = await Booking.findById(req.params.id).populate({
             path: 'car',
-            select: 'nameofmodel licenseplate province tel'
+            select: 'brand carModel type licensePlate googleMapsURL tel'
         });
 
         if(!booking) {
@@ -68,7 +68,7 @@ exports.addBooking = async (req, res, next) => {
         const car = await Car.findById(req.params.carId);
 
         if (!car) {
-            return res.status(404).json({ success: false, message: `No Car with the id of ${req.params.CarId}.` });
+            return res.status(404).json({ success: false, message: `No Car with the id of ${req.params.carId}.` });
         }
 
         // Add user Id to req.body

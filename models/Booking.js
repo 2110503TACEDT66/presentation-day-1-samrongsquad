@@ -21,6 +21,6 @@ const BookingSchema = new mongoose.Schema({
     }
 });
 
-BookingSchema.index({bookingDate: 1, car: 1}, {unique: true});
+// BookingSchema.index({bookingDate: 1, car: 1}, {unique: true});
 
 module.exports = mongoose.model('Booking', BookingSchema);

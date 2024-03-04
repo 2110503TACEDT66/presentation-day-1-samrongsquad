@@ -14,7 +14,7 @@ const CarSchema = new mongoose.Schema({
         'Suzuki', 'Scion', 'Geo', 'AMC', 'Studebaker', 'Hudson', 'DeLorean', 'Packard'],
         required: [true, 'Please add a name of car brand.']
     },
-    model: {
+    carModel: {
         type: String,
         required: [true, 'Please add a name of model.'],
         trim: true,

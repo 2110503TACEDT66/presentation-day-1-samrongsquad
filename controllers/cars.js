@@ -75,7 +75,7 @@ exports.getCars = async (req,res,next) => {
 
         res.status(200).json({success: true, count: cars.length, pagination, data: cars});
     } catch(err) {
-        res.status(400).json({success: false});
+        res.status(400).json({success: false, message: `Unable to view all cars due to an unexpected error`});
     }
 };
 
@@ -87,12 +87,12 @@ exports.getCar = async (req,res,next) => {
         const car = await Car.findById(req.params.id).populate('bookings');
 
         if(!car){
-            return res.status(400).json({success:false});
+            return res.status(400).json({success:false, message: `The car does not exist!`});
         }
 
         res.status(200).json({success:true, data:car});
     } catch(err){
-        res.status(400).json({success:false});
+        res.status(400).json({success:false, message: `Unable to view the car due to an unexpected error`});
     }
 };
 
@@ -112,12 +112,12 @@ exports.updateCar = async (req,res,next) => {
         const car = await Car.findByIdAndUpdate(req.params.id, req.body, {new:true, runValidators: true});
 
         if(!car){
-            return res.status(400).json({success:false});
+            return res.status(400).json({success:false, message: `The car does not exist!`});
         }
 
         res.status(200).json({success:true, data:car});
     } catch(err){
-        res.status(400).json({success:false});
+        res.status(400).json({success:false, message: 'Unable to update the car due to an unexpected error'});
     }
 };
 
@@ -129,13 +129,13 @@ exports.deleteCar = async (req,res,next) => {
         const car = await Car.findById(req.params.id);
 
         if(!car){
-            return res.status(404).json({success:false, meesage: `Car not found with id of ${req.params.id}`});
+            return res.status(404).json({success:false, message: `The car does not exist!`});
         }
 
         await car.deleteOne();
         res.status(200).json({success:true, data: {}});
 
     } catch(err){
-        res.status(400).json({success:false});
+        res.status(400).json({success:false, message: 'Unable to delete the car due to an unexpected error'});
     }
 };

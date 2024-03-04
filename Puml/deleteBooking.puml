@@ -17,7 +17,7 @@ server->middlewareAuth ++:protect
 middlewareAuth->server --:
 server->routerbookings ++:app.use('/bookings',bookings)
 routerbookings -> controllersbookings ++:deletebooking()
-controllersbookings->modelbooking ++:findByIdAndDelete(req.params.id)
+controllersbookings->modelbooking ++:findById(req.params.id)
 modelbooking ->bookingsDatabase ++: bookingSchema
 bookingsDatabase --> modelbooking --: booking
 controllersbookings <-- modelbooking --:booking

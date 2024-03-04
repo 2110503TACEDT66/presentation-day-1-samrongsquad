@@ -1,7 +1,7 @@
 @startuml
 left to right direction
 package "CarB"{
-    class "<<Application>>\nCarBbooking" as CarBbooking{}
+    class "<<Application>>\nCarBService" as CarBService{}
 
     class "<<Resource>>\nCars" as ResourceCars{
         <<GET>> +getCars():Car
@@ -29,10 +29,64 @@ package "CarB"{
         -tel
     }
 
+   
+
+    class "<<Resource>>\nBookings" as ResourceBookings{
+        <<GET>> +getBookings():Booking
+        <<POST>> +addBooking():Booking
+    }
+
+    class "<<Resource>>\nBooking" as ResourceBooking {
+        <<GET>> +getBooking(): Booking
+        <<PUT>> +updateBooking(): Booking
+        <<DELETE>> +deleteBooking(): void
+    }
+
+    class "<<Representation>>\nBooking" as RepresentationBooking {
+        -bookingDate
+        -user
+        -car
+        -createdAt
+    }
+
+    class "<<Resource>>\nAuth" as ResourceAuth{
+        <<POST>> +register():Token
+        <<POST>> +login():Token
+        <<GET>> +logout():void
+        <<POST>> +getMe():User
+    }
+
+    class "<<Resource>>\nMiddleware" as ResourceMiddleware{
+        verifyToken()
+    }
+
+    class "<<Representation>>\nUser" as RepresentationUser {
+        -name
+        -tel
+        -email
+        -role
+        -password
+        -createdAt
+    }
+    
+
+
+
+
+
 }
 
-CarBbooking ..> ResourceCars:"/cars\n<<Path>>"
+CarBService ..> ResourceCars:"/cars\n<<Path>>"
 ResourceCars ..> ResourceCar: "/{carId}\n<<Path>>"
 ResourceCar ..> RepresentationCar: "<<use>>"
+ResourceCar ..> ResourceBookings:"/bookings\n<<Path>>"
+
+CarBService ..> ResourceBookings:"/bookings\n<<Path>>"
+ResourceBookings ..> ResourceBooking: "/{bookingId}\n<<Path>>"
+ResourceBooking ..> RepresentationBooking: "<<use>>"
+
+CarBService ..> ResourceAuth:"/auth\n<<Path>>"
+ResourceAuth ..> ResourceMiddleware:"/middleware\n<<Path>>"
+ResourceAuth ..> RepresentationUser:"<<use>>"
 
 @enduml

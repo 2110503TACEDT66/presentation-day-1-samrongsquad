@@ -10,14 +10,16 @@ participant "<<middleware>>\n:auth" as middlewareAuth
 participant "<<router>>\n:cars" as routercars
 participant "<<controllers>>\n:cars" as controllerscars
 participant "<<model>>\n:car" as modelcar
+participant "<<models>>\n:Booking" as bookingModel
 database "<<MongoDB>>\n:cars" as carsDatabase
+database "<<MongoDB>>\n:bookings" as bookingDatabase
 
 client->server ++:req.delete('/cars/:id')
 server->middlewareAuth ++:protect
 middlewareAuth->server --:
 server->routercars ++:app.use('/cars',cars)
 routercars -> controllerscars ++:deletecar()
-controllerscars->modelcar ++:findByIdAndDelete(req.params.id)
+controllerscars->modelcar ++:findById(req.params.id)
 modelcar ->carsDatabase ++: carSchema
 carsDatabase --> modelcar --: car
 controllerscars <-- modelcar --:car

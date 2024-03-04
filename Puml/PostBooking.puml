@@ -2,7 +2,7 @@
 
 header Post car diagram
 footer Page %page% of %lastpage%
-title "Post Car (POST)"
+title "Post booking (POST)"
 
 participant "Client" as client
 participant "<<javaScript>>\n:server" as server

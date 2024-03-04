@@ -1,0 +1,38 @@
+@startuml
+left to right direction
+package "CarB"{
+    class "<<Application>>\nCarBbooking" as CarBbooking{}
+
+    class "<<Resource>>\nCars" as ResourceCars{
+        <<GET>> +getCars():Car
+        <<POST>> +createCar():Car
+    }
+
+    class "<<Resource>>\nCar" as ResourceCar {
+        <<GET>> +getCar(): Car
+        <<PUT>> +updateCar(): Car
+        <<DELETE>> +deleteCar(): void
+    }
+
+    class "<<Representation>>\nCar" as RepresentationCar {
+        -brand
+        -carModel
+        -type
+        -pricePerDay
+        -licensePlate
+        -address
+        -district
+        -province
+        -postalCode
+        -googleMapsURL
+        -imageURL
+        -tel
+    }
+
+}
+
+CarBbooking ..> ResourceCars:"/cars\n<<Path>>"
+ResourceCars ..> ResourceCar: "/{carId}\n<<Path>>"
+ResourceCar ..> RepresentationCar: "<<use>>"
+
+@enduml

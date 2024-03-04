@@ -1,4 +1,4 @@
-@startuml
+@startuml CarBService
 left to right direction
 package "CarB"{
     class "<<Application>>\nCarBService" as CarBService{}

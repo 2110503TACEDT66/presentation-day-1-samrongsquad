@@ -13,7 +13,7 @@ database "<<MongoDB>>\n:cars" as carsDatabase
 
 client->server ++:req.get('/cars')
 server->routercars ++:app.use('/cars',cars)
-routercars -> controllerscars ++:getcars()
+routercars -> controllerscars ++:getCars()
 controllerscars->modelcar ++:find()
 modelcar ->carsDatabase ++: carSchema
 carsDatabase --> modelcar --: cars

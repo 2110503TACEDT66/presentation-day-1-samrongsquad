@@ -1,0 +1,26 @@
+@startuml Post booking (POST)
+
+header Post car diagram
+footer Page %page% of %lastpage%
+title "Post Car (POST)"
+
+participant "Client" as client
+participant "<<javaScript>>\n:server" as server
+participant "<<middleware>>\n:auth" as middlewareAuth
+participant "<<router>>\n:bookings" as routerbookings
+participant "<<controllers>>\n:bookings" as controllersbookings
+participant "<<model>>\n:booking" as modelbooking
+database "<<MongoDB>>\n:bookings" as bookingsDatabase
+
+client->server ++:req.post('/bookings')
+server->middlewareAuth ++: protect
+middlewareAuth -> server --:
+server->routerbookings ++:app.use('/bookings',bookings)
+routerbookings -> controllersbookings ++:createbooking()
+controllersbookings->modelbooking ++:create(req.body)
+modelbooking ->bookingsDatabase ++: bookingSchema
+bookingsDatabase --> modelbooking --: booking
+controllersbookings <-- modelbooking --:booking
+controllersbookings->client --:response
+
+@enduml
